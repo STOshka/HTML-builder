@@ -6,13 +6,12 @@ const copyFiles = async (mainFolder, newFolder) => {
   mkdir(newFolder, { recursive: true });
   const filesInFolder = await readdir(mainFolder, {withFileTypes: true});
   for (const file of filesInFolder) {
+    const mainFile = path.join(mainFolder + '/' + file.name);
+    const newFile = path.join(newFolder + '/' + file.name);
     if (file.isFile()) {
-      const mainFile = path.join(mainFolder + '/' + file.name);
-      const newFile = path.join(newFolder + '/' + file.name);
       copyFile(mainFile, newFile); 
     } else {
-      copyFiles(path.join(mainFolder + '/' + file.name), 
-        path.join(newFolder + '/' + file.name));
+      copyFiles(mainFile, newFile);
     }
   }
 };
